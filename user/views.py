@@ -17,18 +17,20 @@ def login(request):
                 
                 return redirect('/')
 
-    return render(request, 'account/login.html')
+    return render(request, 'user/login.html')
 
 
 def signup(request):
+    
     if request.method == 'POST':
+        return redirect('/login/')
         name = request.POST.get('name', '')
         email = request.POST.get('email', '')
-        password1 = request.POST.get('password1', '')
+        password = request.POST.get('password', '')
         password2 = request.POST.get('password2', '')
 
-        if name and email and password1 and password2:
-            user = User.objects.create_user(name, email, password1)
+        if name and email and password and password2:
+            user = User.objects.create_user(name, email, password)
 
             print('User created:', user)
 
@@ -36,6 +38,6 @@ def signup(request):
         else:
             print('Something went wrong')
     else:
-        return render(request, 'account/signup.html')
+        return render(request, 'user/signup.html')
 
-    return render(request, 'account/signup.html')
+    return render(request, 'user/signup.html')
