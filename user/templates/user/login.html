@@ -3,7 +3,8 @@
 <main class="flex justify-center mt-20">
   <div class="bg-white p-8 rounded-lg shadow-md w-96">
     <h2 class="text-2xl font-semibold mb-4 text-gray-800">Log in</h2>
-    <form>
+    <form method="post" action=".">
+      {% csrf_token %}
       <div class="mb-4">
         <label
           for="email"

@@ -14,7 +14,7 @@ def login(request):
 
             if user is not None:
                 auth_login(request, user)
-                
+                        
                 return redirect('/')
 
     return render(request, 'user/login.html')
@@ -23,7 +23,6 @@ def login(request):
 def signup(request):
     
     if request.method == 'POST':
-        return redirect('/login/')
         name = request.POST.get('name', '')
         email = request.POST.get('email', '')
         password = request.POST.get('password', '')
