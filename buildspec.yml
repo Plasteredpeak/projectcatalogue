@@ -13,7 +13,9 @@ phases:
     commands:
       - python --version # Print Python version for verification
       - pylint $CODEBUILD_SRC_DIR/manage.py || true # Run pylint on manage.py and ignore exit status
+      - python $CODEBUILD_SRC_DIR/manage.py makemigrations # Run makemigrations command
+      - python $CODEBUILD_SRC_DIR/manage.py migrate # Run migrate command
 
 artifacts:
   files:
-    - "**/*" # Include all files in the artifact
+    - "**/*" # Include all files in the artifact
