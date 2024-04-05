@@ -1,11 +1,9 @@
 from django.contrib.auth import authenticate, login as auth_login , logout as auth_logout
 from django.shortcuts import render, redirect
 
-from .models import User
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.shortcuts import render, redirect
 from .forms import LoginForm
-from .models import User
 from .forms import SignupForm
 
 
