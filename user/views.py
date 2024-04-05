@@ -1,42 +1,42 @@
-from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth import authenticate, login as auth_login , logout as auth_logout
 from django.shortcuts import render, redirect
 
 from .models import User
+from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
+from django.shortcuts import render, redirect
+from .forms import LoginForm
+from .models import User
+from .forms import SignupForm
 
 
 def login(request):
     if request.method == 'POST':
-        email = request.POST.get('email', '')
-        password = request.POST.get('password', '')
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            password = form.cleaned_data['password']
 
-        if email and password:
             user = authenticate(request, email=email, password=password)
 
             if user is not None:
                 auth_login(request, user)
-                        
                 return redirect('/')
+    else:
+        form = LoginForm()
 
-    return render(request, 'user/login.html')
+    return render(request, 'user/login.html', {'form': form})
 
 
 def signup(request):
-    
     if request.method == 'POST':
-        name = request.POST.get('name', '')
-        email = request.POST.get('email', '')
-        password = request.POST.get('password', '')
-        password2 = request.POST.get('password2', '')
-
-        if name and email and password and password2:
-            user = User.objects.create_user(name, email, password)
-
-            print('User created:', user)
-
+        form = SignupForm(request.POST)
+        if form.is_valid():
+            form.save()
             return redirect('/login/')
-        else:
-            print('Something went wrong')
     else:
-        return render(request, 'user/signup.html')
+        form = SignupForm()
+    return render(request, 'user/signup.html', {'form': form})
 
-    return render(request, 'user/signup.html')
+def logout(request):
+    auth_logout(request)
+    return redirect('/')
